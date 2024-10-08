@@ -1,0 +1,52 @@
+<vertical>
+    <appbar>
+        <toolbar bg="#4EBFDD" layout_height="50" margin="-2" id="toolbar" title="项目标题" />
+    </appbar>
+    <ScrollView>
+        <vertical marginTop="5">
+            <card w="*" h="auto" margin="10 5" cardCornerRadius="2dp" cardElevation="1dp" gravity="center_vertical">
+                <vertical padding="18 8" h="auto">
+                    <linear>
+                        <Switch marginLeft="0" marginRight="12" marginTop="0" marginBottom="0" layout_weight="1" id="autoService" text="无障碍服务" textSize="15sp" checked="{{auto.service != null}}" />
+                        <Switch margin="12 0" layout_weight="1" id="floatyService" text="悬浮窗权限" textSize="15sp" checked="false" />
+                    </linear>
+                </vertical>
+                <View bg="#4EBFDD" h="*" w="5" />
+            </card>
+
+            <card w="*" h="auto" margin="10 5" cardCornerRadius="2dp" cardElevation="1dp" gravity="center_vertical">
+                <vertical padding="18 8" h="auto">
+                    <linear>
+                        <text text="验证信息" textColor="black" w="auto" textStyle="bold" />
+                        <input id="validInfo" text="你好！" textSize="14sp" color="black" paddingLeft="5" w="*" />
+                    </linear>
+                </vertical>
+                <View bg="#4EBFDD" h="*" w="5" />
+            </card>
+            <card w="*" h="auto" margin="10 5" cardCornerRadius="2dp" cardElevation="1dp" gravity="center_vertical">
+                <vertical padding="18 8" h="auto">
+                    <linear>
+                        <text text="间隔最少" textSize="14sp" textColor="black" w="auto" textStyle="bold" layout_weight="0.2" />
+                        <input id="stepSec" text='1' textSize="14sp" color="black" paddingLeft="5" ems="3" inputType="number" gravity="center" layout_weight="1" />
+                        <text text="（秒）" textSize="14sp" textColor="black" w="auto" textStyle="bold" layout_weight="1.8" />
+                    </linear>
+                    <linear>
+                        <text text="添加最多" textSize="14sp" textColor="black" w="auto" textStyle="bold" layout_weight="0.2" />
+                        <input id="maxAddCount" text='10' textSize="14sp" color="black" paddingLeft="5" ems="3" inputType="number" gravity="center" layout_weight="1" />
+                        <text text="（好友）" textSize="14sp" textColor="black" w="auto" textStyle="bold" layout_weight="1.8" />
+                    </linear>
+                </vertical>
+                <View bg="#4EBFDD" h="*" w="5" />
+            </card>
+
+            <card w="*" h="auto" margin="10 5" cardCornerRadius="2dp" cardElevation="1dp" gravity="center_vertical">
+                <button id="save" h="auto" text="保 存 配 置" textSize="17" textStyle="bold" color="#ffffff" bg="#4EBFDD" foreground="?selectableItemBackground" layout_gravity="bottom" />
+                <View bg="#4EBFDD" h="*" w="5" />
+            </card>
+            <card w="*" h="auto" margin="10 5" cardCornerRadius="2dp" cardElevation="1dp" gravity="center_vertical">
+                <button id="boot" h="auto" text="开 始 运 行" textSize="17" textStyle="bold" color="#ffffff" bg="#4EBFDD" foreground="?selectableItemBackground" layout_gravity="bottom" />
+                <View bg="#4EBFDD" h="*" w="5" />
+            </card>
+        </vertical>
+    </ScrollView>
+</vertical>
