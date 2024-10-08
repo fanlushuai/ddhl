@@ -13,6 +13,7 @@ AutojsUtil.autoServiceCheck();
 ui.save.click(function () {
   log("保存配置");
   Config.setUI2LSConfig();
+  log(Config);
   ui.run(function () {
     AutojsUtil.buttonFlashing(ui.save, "已 保 存");
   });
