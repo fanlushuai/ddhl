@@ -1,240 +1,106 @@
-let W = device.width;
-let H = device.height;
-function getCurrentTime() {
-  return new Date().getTime();
-}
-function clickTextIfExists(textString) {
-  return clickPageSelectorIfExists(text(textString), textString);
-}
+//
+// 00:19:20.820/D: cN:..TextView - id: tvDriverPeopleCount - text: 1人
+// 00:19:20.821/D: cN:..TextView - id: tvDriverPooling - text: 拼座     text("舒适拼")
+// 00:19:20.821/D: cN:..TextView - id: tvTabPay - text: 已预付
+// 00:19:20.822/D: cN:..TextView - id: tvDriverHighwayFee - text: 不承担高速费
 
-function clickPageSelectorIfExists(selector, text) {
-  let pageShowSelector = selector
-    .boundsInside(0, 0, device.width, device.height)
-    .visibleToUser();
-  return clickSelectIfExists(pageShowSelector, text);
-}
+// 00:19:20.780/D: cN:..TextView - id: tvDate - text: 今天 02:00~02:20
+// 00:19:20.787/D: cN:..TextView - id: tvStartAddressCross - text: 晋城市·郭素波诊所
+// 00:19:20.788/D: cN:..TextView - id: tvStartDistanceCross - text: 9.5km
+// 00:19:20.791/D: cN:..TextView - id: tvEndAddress - text: 平顶山市·万基·九尊府
+// 00:19:20.791/D: cN:..TextView - id: tvEndAddress - text: 平顶山市·万基·九尊府
 
-function clickSelectIfExists(selector, text) {
-  let ele = selector.findOnce();
-  if (ele == null) {
-    return;
-  }
+// 市内路线。tvStartAddress  距你12.1km
+// 市内路线。tvStartDistance  晋城市宏顺钢结构工程有限公司-东南侧
+// tvEndAddress  阳城县
+// tvRegionDescribe 山西亚美大宁能源有限公司
+// tvAmount
 
-  log("找到->" + text + "");
-  clickEleWithLog(ele, text);
-  sleep(200, 500);
-  return true;
-}
+// 00:19:20.798/D: cN:..TextView - id: tvDriverPeopleCount - text: 1人
+// 00:19:20.799/D: cN:..TextView - id: tvDriverPooling - text: 拼座
 
-function clickEleWithLog(ele, text) {
-  if (ele.clickable() == true) {
-    log("点击->" + text);
-    ele.click();
-  } else {
-    log(
-      "点击坐标-> " +
-        ele.bounds().centerX() +
-        "," +
-        ele.bounds().centerY() +
-        " " +
-        text
-    );
-    press(
-      ele.bounds().centerX() + random(0, 6) - 3,
-      ele.bounds().centerY() + random(0, 6) - 3,
-      1
-    );
-  }
+// id("tvNearPax")text("市内路线")
+// id("tvAcrossPax")text("城际路线")
+
+// text("没有更多数据")
+
+amountEles = id("tvAmount").find();
+for (let ae of amountEles) {
+  log(ae.getText());
+  getEle(ae);
+  log("---------");
 }
 
-function clickParent(ele, deep) {
-  if (ele == null || deep == 0) {
-    return false;
+// clickEleWithLog(findClickableParent(amountEles[3], 5), "第一个");
+
+// dis =
+//   amountEles[amountEles.length - 2].bounds().top - amountEles[0].bounds().top;
+
+// log(amountEles[amountEles.length - 2].bounds().top);
+// log(amountEles[0].bounds().top);
+// swipe(
+//   W / 6,
+//   amountEles[amountEles.length - 2].bounds().top - 500,
+//   W / 6,
+//   amountEles[0].bounds().top,
+//   1000
+// );
+
+// swipe(W / 2, H / 2, W / 2, H / 2 - 600, 1500);
+// swipe(W / 2, H / 2, W / 3, H / 2 - 600, 100);
+// swipe(W / 2, H / 2, W / 2, H / 2 - 600, 1500);
+
+function getEle(amountEle) {
+  let cardEle = amountEle.parent().parent().parent();
+
+  let tvDateEle = cardEle.findOne(id("tvDate"));
+  if (tvDateEle != null) {
+    let tvDateText = tvDateEle.getText();
+    log(tvDateText);
+  }
+  let tvStartAddressCrossEle = cardEle.findOne(id("tvStartAddressCross"));
+  if (tvStartAddressCrossEle != null) {
+    let tvStartAddressCrossText = tvStartAddressCrossEle.getText();
+    log(tvStartAddressCrossText);
+  }
+  let tvStartDistanceCrossEle = cardEle.findOne(id("tvStartDistanceCross"));
+  if (tvStartDistanceCrossEle != null) {
+    let tvStartDistanceCrossText = tvStartDistanceCrossEle.getText();
+    log(tvStartDistanceCrossText);
+  }
+  let tvEndAddressEle = cardEle.findOne(id("tvEndAddress"));
+  if (tvEndAddressEle != null) {
+    let tvEndAddressText = tvEndAddressEle.getText();
+    log(tvEndAddressText);
   }
 
-  if (ele.parent() == null) {
-    return false;
+  let tvDriverPeopleCountEle = cardEle.findOne(id("tvDriverPeopleCount"));
+  if (tvDriverPeopleCountEle != null) {
+    let tvDriverPeopleCountText = tvDriverPeopleCountEle.getText();
+    log(tvDriverPeopleCountText);
   }
-
-  if (ele.parent().clickable() == true) {
-    ele.parent().click();
-    return true;
-  } else {
-    return clickParent(ele.parent(), deep - 1);
+  let tvDriverPoolingEle = cardEle.findOne(id("tvDriverPooling"));
+  if (tvDriverPoolingEle != null) {
+    let tvDriverPoolingText = tvDriverPoolingEle.getText();
+    log(tvDriverPoolingText);
   }
-}
-
-function include() {
-  // arguments 对象。是一个类数组对象。包含了函数调用时，传入的所有实参
-  for (let i = 0; i < arguments.length; i++) {
-    if (text(String(arguments[i])).findOnce() == null) {
-      return false;
-    }
+  let tvTabPayEle = cardEle.findOne(id("tvTabPay"));
+  if (tvTabPayEle != null) {
+    let tvTabPayText = tvTabPayEle.getText();
+    log(tvTabPayText);
   }
-
-  return true;
-}
-
-function findOneInPage(selector) {
-  return selector
-    .boundsInside(0, 0, device.width, device.height)
-    .visibleToUser()
-    .findOnce();
-}
-
-function addOnePeople() {
-  let nickNameEle = findOneInPage(id("nickname"));
-  let nickName = nickNameEle.text();
-
-  if (inJumpList(nickName)) {
-    log("已经在跳过列表中，跳过" + nickName);
-    jumpNickName(nickName);
-    return;
-  }
-
-  log("即将处理：" + nickName);
-
-  let e = nickNameEle.parent().parent().findOne(text("添加"));
-  if (e == null) {
-    log("没有添加按钮，跳过");
-    jumpNickName(nickName);
-
-    return;
-  }
-
-  e.click();
-
-  sleep(4000);
-
-  if (include(nickName, "添加好友")) {
-    log("位于添加好友页面");
-
-    let verifyInfoEle = text("填写验证信息").className("TextView").findOnce();
-    if (verifyInfoEle) {
-      log("需要填写验证信息");
-      let bottom = verifyInfoEle.bounds().bottom;
-      log("bottom:" + bottom);
-
-      let editTextArr = className("EditText").find();
-      for (let e of editTextArr) {
-        log(e.bounds().top);
-        if (e.bounds().top > bottom) {
-          log("选择下面最近的输入框");
-          e.setText("你好");
-          break;
-        }
-      }
-    }
-
-    if (className("EditText").text("输入答案").exists()) {
-      log("需要输入答案，跳过");
-      back();
-      sleep(1500);
-      jumpNickName(nickName);
-      return;
-    }
-
-    if (
-      clickPageSelectorIfExists(
-        className("Button").text("发送").clickable(true),
-        "发送"
-      )
-    ) {
-      sleep(1500);
-      if (clickTextIfExists("我知道了")) {
-        sleep(500);
-        back();
-      }
-      return true;
-    }
-  }
-
-  function jumpNickName(jumpNickName) {
-    log("跳过用户：" + jumpNickName + "");
-    addJumpList(jumpNickName);
-
-    let nicknameEles = id("nickname")
-      .boundsInside(0, 0, device.width, device.height)
-      .visibleToUser()
-      .find();
-
-    // log(nicknameEles.length);
-
-    if (nicknameEles && nicknameEles.length >= 2) {
-      //   log("第一个昵称：" + nicknameEles[0].text());
-      if (nicknameEles[0].text() == jumpNickName) {
-        log("跳过用户：" + jumpNickName + "");
-        let scrollUpLength =
-          nicknameEles[1].bounds().bottom - nicknameEles[0].bounds().bottom;
-
-        log("上滑距离:" + scrollUpLength);
-
-        swipe(W / 2, H / 2, W / 2, H / 2 - scrollUpLength, 500);
-        sleep(1500);
-      }
-    }
+  let tvDriverHighwayFeeEle = cardEle.findOne(id("tvDriverHighwayFee"));
+  if (tvDriverHighwayFeeEle != null) {
+    let tvDriverHighwayFeeText = tvDriverHighwayFeeEle.getText();
+    log(tvDriverHighwayFeeText);
   }
 }
 
-let sleepTime = 6000;
+// back();
 
-let storage = storages.create("fjdsjfdskj");
-
-let jumpList = [];
-
-function loadJumpList() {
-  return storage.get("jumpList", []);
-}
-
-jumpList = loadJumpList();
-
-function addJumpList(nickName) {
-  log("加入跳过列表：" + nickName + "");
-  jumpList.push(nickName);
-  storage.put("jumpList", jumpList);
-}
-
-function inJumpList(nickName) {
-  return jumpList.indexOf(nickName) > -1;
-}
-
-fastIntoLoation();
-while (1) {
-  if (addOnePeople()) {
-    sleep(1000);
-    sleep(sleepTime);
-  }
-}
-
-function fastIntoLoation() {
-  log("开始快速找到第一个可添加的");
-
-  let nicknameEles = id("nickname")
-    .boundsInside(0, 0, device.width, device.height)
-    .visibleToUser()
-    .find();
-
-  let e;
-  for (let ne of nicknameEles) {
-    if (!inJumpList(ne.getText())) {
-      e = ne;
-      break;
-    }
-  }
-
-  if (e) {
-    log("直接移动到：" + e.text());
-    let dis = e.bounds().bottom - nicknameEles[0].bounds().bottom;
-    log("上滑距离:" + dis);
-    swipe(W / 2, e.bounds().bottom, W / 2, dis, 500);
-    log("快速寻找完毕");
-    sleep(1500);
-    return;
-  } else {
-    // 可能死循环
-    log("翻页");
-    swipe(W / 2, H - 500, W / 2, 500, 500);
-
-    fastIntoLoation();
-  }
+function findClickableParent(ele, deep) {
+  if (deep == 0) return null;
+  return ele.parent().clickable() == true
+    ? ele.parent()
+    : findClickableParent(ele.parent(), deep - 1);
 }

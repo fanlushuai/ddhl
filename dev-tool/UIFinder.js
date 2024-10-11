@@ -32,5 +32,6 @@ function logEx(ele) {
     l += " - scrollable: true";
   }
 
+  l += ele.bounds();
   return l;
 }
