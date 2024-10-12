@@ -45,18 +45,17 @@ function keysWordsOk(keys, testStr) {
   }
 
   for (let i = 0; i < postionArr.length; i++) {
-    let keywords = keys.subString(i, postionArr[i + 1]).trim();
+    let keywords = keys.substring(i, postionArr[i + 1]).trim();
     if (keys.charAt(i) == "+") {
       log("包含 关键字:" + keywords);
-      if(testStr.indexOf(keywords) == -1)){
+      if (testStr.indexOf(keywords) == -1) {
         return false;
       }
     } else if (keys.charAt(i) == "-") {
       log("排除 关键字:" + keywords);
-      if(testStr.indexOf(keywords) != -1){
+      if (testStr.indexOf(keywords) != -1) {
         return false;
       }
-
     }
   }
 
@@ -71,16 +70,10 @@ const matchOrder = {
   endKeysOk: function (endAddr) {
     return keysWordsOk(Config.endKeyWords, endAddr);
   },
-  addrOk: function (fromAddr, toAddr) {
-    if (fromAddr) {
-    }
-
-    if (toAddr) {
-    }
-  },
   timeOk: function (time) {
     goTimeBegin;
     goTimeEnd;
+    return time >= Config.goTimeBegin && time <= Config.goTimeEnd;
   },
   peopleOk: function (count) {
     // todo Config.cbOnePeopleNotLimit
@@ -141,20 +134,19 @@ const matchOrder = {
     }
 
     if (Config.cbfromKeyWords) {
-        if (!this.fromKeysOk(order.fromAddr)) {
-            return false;
-        }
+      if (!this.fromKeysOk(order.fromAddr)) {
+        return false;
+      }
     }
 
     if (Config.endKeyWords) {
-        if (!this.endKeysOk(order.toAddr)) {
-            return false;
-        }
+      if (!this.endKeysOk(order.toAddr)) {
+        return false;
+      }
     }
 
     return true;
   },
 };
 
-
-module.exports = {matchOrder};
+module.exports = { matchOrder };
