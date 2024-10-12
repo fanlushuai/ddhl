@@ -46,6 +46,7 @@ function keysWordsOk(keys, testStr) {
 
   for (let i = 0; i < postionArr.length; i++) {
     let keywords = keys.substring(i, postionArr[i + 1]).trim();
+    log("关键字:" + keywords);
     if (keys.charAt(i) == "+") {
       log("包含 关键字:" + keywords);
       if (testStr.indexOf(keywords) == -1) {
