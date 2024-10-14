@@ -104,6 +104,13 @@ function findInPage(selector) {
     .find();
 }
 
+function getOnceTextById(idStr) {
+  let e = id(idStr).findOnce();
+  if (e) {
+    return e.text();
+  }
+}
+
 module.exports = {
   H,
   W,
@@ -118,4 +125,5 @@ module.exports = {
   clickSelectIfExists,
   findInPage,
   findOnceInPage,
+  getOnceTextById,
 };

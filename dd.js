@@ -1,3 +1,282 @@
-const dd = {};
+const { Config } = require("./config");
+const { matchOrder } = require("./matchOrder");
+const {
+  clickEleWithLog,
+  clickPageSelectorIfExists,
+  include,
+  includeSelector,
+} = require("./x");
+function findIdInParent(ele, deep, idStr) {
+  let e = ele.parent();
+  let idE = e.findOne(id(idStr));
+  if (idE) {
+    return idE.text();
+  } else {
+    deep--;
+    if (deep < 0) {
+      log("找不到id：" + idStr);
+      return null;
+    }
+    return findIdInParent(e, deep, idStr);
+  }
+}
+const parseOrder = {
+  price: function (priceStr) {
+    if (priceStr) {
+      // 220.53元
+      // 已支付220.53元
+      return priceStr.replace("已支付", "").replace("元", "");
+    }
+  },
+  byWayLevel: function (byWayLevelStr) {
+    if (byWayLevelStr) {
+      return byWayLevelStr.replace("%顺路", "");
+    }
+  },
+  time: function (timeStr) {
+    if (timeStr) {
+      // 今天21:30-21:45
+      // text("10月20日04:00-04:15")
+      // todo 解析时间
+      return timeStr;
+    }
+  },
+  disFrom: function (disFromStr) {
+    if (disFromStr && /[0-9 \.]+km/.test(disFromStr)) {
+      return disFromStr.replace("km", "");
+    }
+  },
+  disTo: function (disEndStr) {
+    if (disEndStr && /[0-9 \.]+km/.test(disEndStr)) {
+      return disEndStr.replace("km", "");
+    }
+  },
+  disTo: function (str) {
+    // if (str) {
+    //   return str.replace("km", "");
+    // }
+  },
+  dis: function (str) {
+    if (str) {
+      //xxxx 订单里程115.7km xxx
+      let startIndex = str.indexOf("订单里程");
+      let endIndex = str.indexOf("km");
+      if (startIndex > 0 && endIndex > 0) {
+        return str.substring(startIndex + 4, endIndex);
+      }
+    }
+  },
+
+  highWayFee: function (str) {
+    if (str) {
+      // 可以协商高速费
+      // text("1人愿拼 · 订单里程75.6km · 承担全部高速费")
+      if (str.indexOf("可以协商高速费") > 0) {
+        return "可以协商";
+      } else if (str.indexOf("不出高速费") > 0) {
+        return "不出高速费";
+      } else if (str.indexOf("承担全部高速费") > 0) {
+        return "承担全部高速费";
+      }
+    }
+  },
+  people: function (str) {
+    if (str) {
+      let tA = str.split(".");
+      for (let t of tA) {
+        if (t.indexOf("人") > 0) {
+          return {
+            peopleCount: t.split("人")[0],
+            peopleMode: t.split("人")[1] == "独享" ? "独享" : "拼单",
+          };
+        }
+      }
+    }
+  },
+};
+
+const dd = {
+  publicWayList: function () {
+    if (
+      clickPageSelectorIfExists(
+        id("sfc_home_drv_suspense_title_alert"),
+        "查看全部行程"
+      )
+    ) {
+      // 列表里面一定有内容。不然进不来
+      text("正在寻找顺路乘客").waitFor();
+      log("进入行程列表");
+      let es = text("进行中").find();
+      log("进行中的行程 " + es.size());
+
+      for (let e of es) {
+        // todo 可能需要进行翻页.如果太多的话
+        clickEleWithLog(e, "进行中");
+        sleep(1000);
+        this.publicWayOrderList();
+        // todo 成功，或者失败，然后对应操作
+        clickPageSelectorIfExists(id("back_icon"), "返回");
+        sleep(1000);
+      }
+    }
+  },
+  publicWayOrderList: function () {
+    log("行程列表");
+    this.awaysWayList();
+  },
+  page: function () {
+    let listBottomEle = textStartsWith("- 暂无更多去往").findOnce();
+
+    let priceEles;
+    if (listBottomEle) {
+      let y = listBottomEle.bounds().bottom;
+
+      priceEles = id("sfc_order_price_content").boundsInside(0, 0, W, y).find();
+    } else {
+      priceEles = id("sfc_order_price_content").find();
+    }
+
+    let orders = [];
+    for (let pe of priceEles) {
+      let order = {};
+      order.ele = pe;
+      order.price = parseOrder.price(pe.text());
+
+      order.byWayLevel = parseOrder.byWayLevel(
+        findIdInParent(pe, 3, "sfc_new_order_card_degree_title")
+      ); //顺路
+
+      order.time = parseOrder.time(
+        findIdInParent(pe, 3, "sfc_new_order_card_time_title") //时间
+      );
+
+      order.fromAddr = findIdInParent(pe, 3, "from_tv"); //起点地址
+      order.toAddr = findIdInParent(pe, 3, "to_tv"); //终点地址
+
+      order.disFrom = parseOrder.disFrom(findIdInParent(pe, 3, "from_tv_tag")); //距离，起点
+      order.disTo = parseOrder.disFrom(findIdInParent(pe, 3, "to_tv_tag")); //距离，终点
+
+      //各种：人数，独享，拼单，高速费，里程。
+      let extraInfo = findIdInParent(pe, 3, "sfc_order_card_tips_content");
+      order.dis = parseOrder.dis(extraInfo);
+      let people = parseOrder.people(extraInfo);
+      if (people) {
+        order.peopleMode = people.peopleMode;
+        order.peopleCount = people.peopleCount;
+      }
+
+      order.highWayFee = parseOrder.highWayFee(extraInfo);
+
+      log(JSON.stringify(order));
+      orders.push(order);
+    }
+
+    return orders;
+  },
+  awaysWayList: function () {
+    log("查看列表");
+
+    function clickIfMatchOrder(orders) {
+      let matchO = matchOrder.okk(orders);
+      if (matchO) {
+        log("进入订单详细");
+
+        // 排除，在详情页，继续匹配详情。
+        // 点击按钮
+        if (includeSelector(id("sfc_invite_drv_button_layout"))) {
+          log("在详情页，不点击");
+          return;
+        } else {
+          clickEleWithLog(matchO.ele, "订单详情");
+        }
+
+        sleep(2000);
+        if (Config.testMode == false) {
+          log("正式抢单");
+          clickPageSelectorIfExists(
+            text("邀请同行").id("btn_main_title"),
+            "邀请同行"
+          ) ||
+            clickPageSelectorIfExists(
+              text("立即同行").id("btn_main_title"),
+              "立即同行"
+            );
+
+          // todo 之后干嘛？？？
+        } else {
+          log("测试模式，不点击目标");
+        }
+      }
+    }
+
+    while (true) {
+      let notMoreEle = id("sfc_list_no_more_data_view").findOnce();
+      if (notMoreEle) {
+        log("最后一页");
+        clickIfMatchOrder(this.page());
+        break;
+      }
+
+      // todo 匹配了就进行点击
+      clickIfMatchOrder(this.page());
+
+      swipe(0, H - 500, 0, H / 3, 500);
+      sleep(1000);
+    }
+  },
+  awaysWayTabs: function () {
+    let eles = scrollable().find();
+    eles[1].scrollForward();
+
+    if (
+      clickSelectIfExists(
+        id("sfc_tab_item_text").text("常用路线订单"),
+        "常用路线订单"
+      )
+    ) {
+    } else {
+      log("未找到常用路线订单");
+      return;
+    }
+
+    let sfCount = 0;
+    while (1) {
+      let eArr = findInPage(id("tv_go_time"));
+      if (eArr == null) {
+        log("未找到路线列表");
+        break;
+      }
+      for (let e of eArr) {
+        log("列表检查到" + e.getText() + "");
+        if (e.getText().includes("添加")) {
+          break;
+        }
+        clickEleWithLog(e, "点击" + e.getText());
+        sleep(3000);
+        //   todo
+        this.awaysWayList();
+      }
+
+      if (includeSelector(id("tv_go_time").text("添加"))) {
+        log("循环点击结束");
+        break;
+      }
+
+      log("滚动列表");
+      eles[3].scrollForward();
+      sfCount++;
+      sleep(800);
+    }
+
+    if (sfCount > 0) {
+      log("反向滑动列表");
+      while (sfCount > -2) {
+        sfCount--;
+        eles[3].scrollBackward();
+        sleep(800);
+      }
+    }
+  },
+};
 
 module.exports = { dd };

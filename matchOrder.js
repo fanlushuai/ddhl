@@ -103,6 +103,14 @@ const matchOrder = {
   fromDisOK: function (fromDis) {
     return fromDis >= Config.orderDisMin && fromDis <= Config.orderDisMax;
   },
+  okk: function (orders) {
+    for (let o of orders) {
+      if (this.ok(o)) {
+        log("匹配成功" + o);
+        return o;
+      }
+    }
+  },
   ok: function (order) {
     if (Config.cbGoTime) {
       if (!this.timeOk(order.goTime)) {
