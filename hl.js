@@ -1,3 +1,4 @@
+const { AutojsUtil } = require("./autojsUtil");
 const { matchOrder } = require("./matchOrder");
 const {
   clickTextIfExists,
@@ -105,6 +106,7 @@ const hl = {
       }
 
       return {
+        tvAmount: amountEle.getText(),
         tvDate: findIdText(cardEle, "tvDate"),
         // tvStartAddressCross: findIdText(cardEle, "tvStartAddressCross"),
         // tvStartDistanceCross: findIdText(cardEle, "tvStartDistanceCross"),
@@ -188,7 +190,7 @@ const hl = {
       for (let order of orders) {
         log(order);
         log("判断是否匹配");
-        if (matchOrder.ok(order)) {
+        if (matchOrder.ok_with_hl_Orders(order)) {
           log("匹配成功");
 
           clickEleParentClickableIfExists(order.amountEle, "进入订单详情", 4);
@@ -196,6 +198,7 @@ const hl = {
           //todo  等待进入页面
           log("进入");
           // todo 进去抢单。确认订单。
+          AutojsUtil.playMp3(Config.mp3Path);
         }
       }
     });

@@ -1,35 +1,3 @@
-// Config.goTimeBegin: 25,
-// Config.goTimeEnd: 60,
-// Config.onePeolpeMinCount: 25,
-// Config.onePeolpeMaxCount: 60,
-// Config.multiPeolpeMinCount: 25,
-// Config.multiPeolpeMaxCount: 60,
-// Config.comfortPeopleMinCount: 25,
-// Config.comfortPeopleMaxCount: 60,
-// Config.orderPriceMin: 25,
-// Config.orderPriceMax: 60,
-// Config.orderDisMin: 25,
-// Config.orderDisMax: 60,
-// Config.byWayLevel: 80,
-// Config.peopleCountMin: 25,
-// Config.peopleCountMax: 60,
-// Config.orderPriceMin1: 25,
-// Config.orderPriceMax1: 60,
-// Config.orderDisMin1: 25,
-// Config.orderDisMax1: 60,
-// Config.refreshIntervalSec: 15,
-// Config.fromKeyWords: '',
-// Config.cbfromKeyWords: '',
-// Config.endKeyWords: '10',
-// Config.cbGoTime: false,
-// Config.cbOnePeople: false,
-// Config.cbMultiPeople: false,
-// Config.cbComfortPeople: false,
-// Config.cbOrderPrice: false,
-// Config.cbOrderDis: false,
-// Config.cbOnePeopleNotLimit: false,
-// Config.alertMusic: false,
-
 const { Config } = require("./config");
 function keysWordsOk(keys, testStr) {
   let postionArr = [];
@@ -78,30 +46,22 @@ const matchOrder = {
     return keysWordsOk(Config.endKeyWords, endAddr);
   },
   timeOk: function (time) {
-    goTimeBegin;
-    goTimeEnd;
+    // todo
     return time >= Config.goTimeBegin && time <= Config.goTimeEnd;
   },
-  peopleOk: function (count) {
+  peopleCountOk: function (count) {
     // todo Config.cbOnePeopleNotLimit
     return count >= Config.peopleCountMin && count <= Config.peopleCountMax;
   },
-  multiPeolpeOk: function (count) {
-    return (
-      count >= Config.multiPeolpeMinCount && count <= Config.multiPeolpeMaxCount
-    );
-  },
-  comfortPeopleOk: function (count) {
-    return (
-      count >= Config.comfortPeopleMinCount &&
-      count <= Config.comfortPeopleMaxCount
-    );
-  },
+
   priceOk: function (price) {
     return price >= Config.orderPriceMin && price <= Config.orderPriceMax;
   },
-  fromDisOK: function (fromDis) {
-    return fromDis >= Config.orderDisMin && fromDis <= Config.orderDisMax;
+  disFromOK: function (disFrom) {
+    return disFrom <= Config.orderDisFromMax;
+  },
+  disToOK: function (disTo) {
+    return disTo <= Config.orderDisToMax;
   },
   okk: function (orders) {
     for (let o of orders) {
@@ -111,39 +71,91 @@ const matchOrder = {
       }
     }
   },
+  ok_with_hl_Orders: function (hlOrders) {
+    // { tvDate: 10月21日 06:50~07:00,
+    //   tvStartAddressCross: '北板桥站',
+    //   tvStartDistanceCross: '31.3',
+    //   tvEndAddress: '高平市高平东站',
+    //   tvDriverPeopleCount: '1人',
+    //   tvDriverPooling: 独享   拼座,
+    //   tvTabPay: '已预付',
+    //   tvDriverHighwayFee: undefined,
+    //   amountEle: {} }
+
+    // 标准order定义：
+    for (let o of hlOrders) {
+      let order = {};
+      // order.byWayLevel=o.
+      order.time = o.tvDate; //todo
+      order.price = o.tvAmount.replace("元", "");
+      order.disFrom = o.tvStartDistanceCross;
+      // order.disTo=o.
+      // order.dis=o.
+      order.fromAddr = o.tvStartAddressCross;
+      order.toAddr = o.tvEndAddress;
+      order.peopleCount = o.tvDriverPeopleCount.replace("人", "");
+      order.peopleMode = o.tvDriverPooling;
+      order.highwayFee = o.tvDriverHighwayFee;
+
+      if (this.ok(order)) {
+        log("匹配成功" + order);
+        return o;
+      }
+    }
+  },
   ok: function (order) {
+    if (Config.cbByWayLevel) {
+      // 顺路存在的情况下，才生效
+      if (order.byWayLevel && order.byWayLevel < Config.byWayLevel) {
+        return false;
+      }
+    }
+
     if (Config.cbGoTime) {
-      if (!this.timeOk(order.goTime)) {
+      if (!this.timeOk(order.time)) {
         return false;
       }
     }
 
-    if (Config.cbOnePeople) {
-      if (!this.peopleOk(order.peopleCount)) {
+    if (Config.cbOrderDisFrom) {
+      if (!this.disFromOK(order.disFrom)) {
         return false;
       }
     }
 
-    if (Config.cbMultiPeople) {
-      if (!this.multiPeolpeOk(order.peopleCount)) {
+    if (Config.cbOrderDisTo) {
+      // 终点距离存在的情况下，再生效
+      if (order.disTo && !this.disToOK(order.disTo)) {
         return false;
       }
     }
 
-    if (Config.cbComfortPeople) {
-      if (!this.comfortPeopleOk(order.peopleCount)) {
+    // todo 特惠和舒适没见过
+    let peopleModeOk =
+      (Config.cbOrderModeOnePeople && order.peopleMode.indexOf("独") > 0) ||
+      (Config.cbOrderModeMultiPeople && order.peopleMode.indexOf("拼") > 0) ||
+      (Config.cbOrderModeComfort && order.peopleMode.indexOf("舒") > 0) ||
+      (Config.cbOrderModeChip && order.peopleMode.indexOf("惠") > 0);
+
+    if (!peopleModeOk) {
+      return false;
+    }
+
+    if (Config.cbPeopleCount) {
+      if (!this.peopleCountOk(order.peopleCount)) {
+        if (order.peopleMode.indexOf("独") > -1) {
+          // 独享模式，人数不限
+          if (Config.cbOnePeopleModeCountFree) {
+          } else {
+            return false;
+          }
+        }
         return false;
       }
     }
 
     if (Config.cbOrderPrice) {
       if (!this.priceOk(order.price)) {
-        return false;
-      }
-    }
-
-    if (Config.cbOrderDis) {
-      if (!this.fromDisOK(order.fromDis)) {
         return false;
       }
     }

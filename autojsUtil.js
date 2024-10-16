@@ -958,6 +958,10 @@ const AutojsUtil = {
 
     return okEles;
   },
+  playMp3: function (mp3Path) {
+    log("播放 %s", mp3Path);
+    media.playMusic(mp3Path, 1); //0-1的浮点数，音量
+  },
   onChildStop: function (func) {
     log("注册 接收到 子线程停止 广播");
     events.broadcast.on("childStop", func);

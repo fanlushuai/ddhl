@@ -59,11 +59,11 @@
                     </horizontal>
 
                     <horizontal>
-                        <checkbox id="cbMultiPeople" textColor="black" marginLeft='5'checked="false"/>
+                        <checkbox id="cbPeopleCount" textColor="black" marginLeft='5'checked="false"/>
                         <text text="【人数】" w="auto" textStyle="bold" textSize="14sp" marginRight='1'/>
-                        <input gravity="center" id="multiPeolpeMinCount" inputType="number" text="1" color="#666666" w="65" marginLeft='5'/>
+                        <input gravity="center" id="peopleCountMin" inputType="number" text="1" color="#666666" w="65" marginLeft='5'/>
                         <text text=" - " textStyle="bold" textSize="15sp"/>
-                        <input gravity="center" id="multiPeolpeMaxCount" inputType="number" text="4" color="#666666" w="65"/>
+                        <input gravity="center" id="peopleCountMax" inputType="number" text="4" color="#666666" w="65"/>
                         <text text="(人)" textStyle="bold" textSize="13sp" marginLeft='1'/>
                     </horizontal>
                     <horizontal>
@@ -152,6 +152,7 @@
             </card>
 
             <card w="*" h="auto" margin="10 5" cardCornerRadius="2dp" cardElevation="1dp" gravity="center_vertical">
+                <input visibility='gone' id="mp3Path" inputType="text" text="resource/hlSheetSuc.mp3" color="#666666" w="65"/>
                 <button id="save" h="auto" text="保 存 配 置" textSize="17" textStyle="bold" color="#ffffff" bg="#4EBFDD" foreground="?selectableItemBackground" layout_gravity="bottom" />
                 <View bg="#4EBFDD" h="*" w="5" />
             </card>
