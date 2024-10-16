@@ -37,9 +37,9 @@ const bootV = {
     while (1) {
       if (
         includeSelector(
-          id("tvCarLife")
-            .text("车服务")
-            .boundsInside(0, 0, W, H / 3),
+          // id("tvCarLife")
+          //   .text("车服务")
+          //   .boundsInside(0, 0, W, H / 3),
           id("tvAcrossPax").text("城际路线")
         )
       ) {
@@ -111,6 +111,8 @@ const bootV = {
     sureTop();
 
     dd.publicWayList();
+
+    dd.backFromPublicWayList();
 
     function sureTop() {
       log("确保在顶部");

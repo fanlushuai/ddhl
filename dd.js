@@ -99,6 +99,9 @@ const parseOrder = {
 };
 
 const dd = {
+  backFromPublicWayList: function () {
+    clickSelectIfExists(id("common_title_bar_left_img"), "返回");
+  },
   publicWayList: function () {
     if (
       clickPageSelectorIfExists(
