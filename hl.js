@@ -6,6 +6,7 @@ const {
   clickEleWithLog,
   findClickableParent,
   clickParentClickableSelectorIfExists,
+  clickEleParentClickableIfExists,
 } = require("./x");
 
 function findIdText(baseEle, idStr) {
@@ -190,11 +191,7 @@ const hl = {
         if (matchOrder.ok(order)) {
           log("匹配成功");
 
-          clickParentClickableSelectorIfExists(
-            order.amountEle,
-            "进入订单详情",
-            4
-          );
+          clickEleParentClickableIfExists(order.amountEle, "进入订单详情", 4);
 
           //todo  等待进入页面
           log("进入");

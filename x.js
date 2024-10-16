@@ -51,6 +51,17 @@ function clickParentClickableSelectorIfExists(selector, text, deep) {
   }
 }
 
+function clickEleParentClickableIfExists(ele, text, deep) {
+  if (ele) {
+    let clickableEle = findClickableParent(ele, deep);
+    if (clickableEle) {
+      log("点击 可点击元素 ->" + text);
+      clickableEle.click();
+      return true;
+    }
+  }
+}
+
 function findClickableParent(ele, deep) {
   if (ele.clickable()) {
     return ele;
@@ -187,4 +198,5 @@ module.exports = {
   includePageSelector,
   clickParentClickableSelectorIfExists,
   findClickableParent,
+  clickEleParentClickableIfExists,
 };
