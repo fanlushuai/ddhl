@@ -186,4 +186,5 @@ module.exports = {
   getSelectorBounds,
   includePageSelector,
   clickParentClickableSelectorIfExists,
+  findClickableParent,
 };

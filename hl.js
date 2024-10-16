@@ -4,6 +4,7 @@ const {
   clickSelectIfExists,
   include,
   clickEleWithLog,
+  findClickableParent,
 } = require("./x");
 
 function findIdText(baseEle, idStr) {
@@ -187,6 +188,7 @@ const hl = {
         log("判断是否匹配");
         if (matchOrder.ok(order)) {
           log("匹配成功");
+
           clickEleWithLog(
             findClickableParent(orders.amountEle),
             "进入订单详情"
