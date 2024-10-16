@@ -71,7 +71,8 @@ const matchOrder = {
       }
     }
   },
-  ok_with_hl_Orders: function (hlOrders) {
+  ok_with_hl_dt_Orders: function (hlOrders) {
+    // 大厅和行程的订单字段 ，不一样
     // { tvDate: 10月21日 06:50~07:00,
     //   tvStartAddressCross: '北板桥站',
     //   tvStartDistanceCross: '31.3',
@@ -267,6 +268,7 @@ function parseHLOrder_xc(hlOrder) {
     },
   };
 
+  // 哈喽行程，订单字段
   //   { tvHitchPercent: 55%顺路,
   //     tvDate: '今天 07:00~07:10',
   //     tvStartAddress: '距你111.4km',

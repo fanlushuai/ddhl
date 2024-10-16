@@ -43,38 +43,3 @@ function boot() {
     }
   }
 }
-
-// cbByWayLevel: false,
-// cbOrderDisFrom: false,
-// cbOrderDisTo: false,
-// cbOrderModeOnePeople: true,
-// cbOrderModeMultiPeople: true,
-// cbOrderModeComfort: true,
-// cbOrderModeChip: true,
-// cbMultiPeople: false,
-// cbOnePeopleModeCountFree: false,
-// cbGoTime: false,
-// cbOrderPrice: false,
-// cbFromKeyWords: false,
-// cbEndKeyWords: false,
-// alertMusic: false,
-// testMode: false,
-
-// ddxc: true,
-// ddOffenWay: false,
-// hlxc: true,
-// hldt: false,
-
-// goTimeBegin: '',
-// goTimeEnd: '',
-// fromKeyWords: '',
-// endKeyWords: '',
-// byWayLevel: 90,
-// orderDisFromMax: 10,
-// orderDisToMax: 10,
-// multiPeolpeMinCount: 1,
-// multiPeolpeMaxCount: 4,
-// orderPriceMin: 0,
-// orderPriceMax: 1000,
-
-// refreshIntervalSec: 15 }
