@@ -8,6 +8,9 @@ const {
   clickParentClickableSelectorIfExists,
   includeSelector,
   W,
+  includePageSelector,
+  H,
+  findOnceInPage,
 } = require("./x");
 function findIdInParent(ele, deep, idStr) {
   let e = ele.parent();
@@ -85,12 +88,13 @@ const parseOrder = {
   },
   people: function (str) {
     if (str) {
-      let tA = str.split(".");
+      // text("1人独享 · 订单里程41.9km")
+      let tA = str.split("·");
       for (let t of tA) {
         if (t.indexOf("人") > 0) {
           return {
             peopleCount: t.split("人")[0],
-            peopleMode: t.split("人")[1] == "独享" ? "独享" : "拼单",
+            peopleMode: str.indexOf("独享") > 0 ? "独享" : "拼单",
           };
         }
       }
@@ -133,21 +137,20 @@ const dd = {
     this.awaysWayList();
   },
   page: function () {
-    let listBottomEle = textStartsWith("- 暂无更多去往").findOnce();
+    let listBottomEle = findOnceInPage(textStartsWith("- 暂无更多去往"));
 
     let priceEles;
     if (listBottomEle) {
       let y = listBottomEle.bounds().bottom;
       priceEles = id("sfc_order_price_content").boundsInside(0, 0, W, y).find();
     } else {
-      priceEles = id("sfc_order_price_content").find();
+      priceEles = findInPage(id("sfc_order_price_content"));
     }
 
     let orders = [];
     for (let pe of priceEles) {
       // 此处返回的，就是标准order对象
       let order = {};
-      order.ele = pe;
       order.price = parseOrder.price(pe.text());
 
       order.byWayLevel = parseOrder.byWayLevel(
@@ -176,6 +179,8 @@ const dd = {
       order.highWayFee = parseOrder.highWayFee(extraInfo);
 
       log(JSON.stringify(order));
+      log("---------");
+      order.ele = pe;
       orders.push(order);
     }
 
@@ -219,14 +224,13 @@ const dd = {
     }
 
     while (true) {
-      let notMoreEle = id("sfc_list_no_more_data_view").findOnce();
-      if (notMoreEle) {
-        log("最后一页");
+      if (includePageSelector(id("sfc_list_no_more_data_view"))) {
+        log("出现底部");
         clickIfMatchOrder(this.page());
         break;
       }
 
-      if (includeSelector(textStartsWith("暂无顺路乘客，持续寻找中"))) {
+      if (includePageSelector(textStartsWith("暂无顺路乘客，持续寻找中"))) {
         log("列表无内容");
         break;
       }
