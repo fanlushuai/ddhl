@@ -7,6 +7,7 @@ const {
   clickSelectIfExists,
   clickParentClickableSelectorIfExists,
   includeSelector,
+  W,
 } = require("./x");
 function findIdInParent(ele, deep, idStr) {
   let e = ele.parent();
@@ -137,7 +138,6 @@ const dd = {
     let priceEles;
     if (listBottomEle) {
       let y = listBottomEle.bounds().bottom;
-
       priceEles = id("sfc_order_price_content").boundsInside(0, 0, W, y).find();
     } else {
       priceEles = id("sfc_order_price_content").find();
@@ -256,40 +256,65 @@ const dd = {
     }
 
     let sfCount = 0;
+
+    let hasClickList = [];
     while (1) {
       let eArr = findInPage(id("tv_go_time"));
       if (eArr == null) {
         log("未找到路线列表");
         break;
       }
+
+      let end = false;
+
       for (let e of eArr) {
         log("列表检查到" + e.getText() + "");
+        // 列表最多4个。小于4个的时候，有添加按钮。
         if (e.getText().includes("添加")) {
+          end = true;
           break;
         }
-        clickEleWithLog(e, "点击" + e.getText());
+
+        let wayEle = e.parent().findOne(id("tv_go_route_name"));
+
+        if (hasClickList.indexOf(wayEle.text() + e.text()) > 0) {
+          log("滚动结尾了");
+          // 点击两次，说明，滚动没有效果。就认为，是到结尾了。
+          end = true;
+          break;
+        }
+
+        hasClickList.push(wayEle.text() + e.text());
+
+        clickEleWithLog(e, "点击" + wayEle.getText());
+        lastClick = wayEle.text();
         sleep(3000);
         //   todo
         this.awaysWayList();
       }
 
-      if (includeSelector(id("tv_go_time").text("添加"))) {
+      if (end || includeSelector(id("tv_go_time").text("添加"))) {
         log("循环点击结束");
         break;
       }
 
-      log("滚动列表");
+      log("向右滚动");
       eles[3].scrollForward();
       sfCount++;
-      sleep(800);
+      sleep(500);
     }
 
+    hasClickList = [];
+    if (sfCount < 3) {
+      // 确保滚动到头
+      sfCount = 3;
+    }
     if (sfCount > 0) {
-      log("反向滑动列表");
+      log("反向滚动");
       while (sfCount > -2) {
         sfCount--;
         eles[3].scrollBackward();
-        sleep(800);
+        sleep(500);
       }
     }
   },

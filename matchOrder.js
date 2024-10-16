@@ -141,15 +141,35 @@ const matchOrder = {
       return false;
     }
 
-    if (Config.cbPeopleCount) {
-      if (!this.peopleCountOk(order.peopleCount)) {
-        if (order.peopleMode.indexOf("独") > -1) {
-          // 独享模式，人数不限
-          if (Config.cbOnePeopleModeCountFree) {
-          } else {
-            return false;
-          }
-        }
+    if (order.peopleMode.indexOf("独") > 0) {
+      if (
+        !(
+          order.peopleCount > Config.ModeDXpeopleCountMin &&
+          order.peopleCount < Config.ModeDXpeopleCountMax
+        )
+      ) {
+        return false;
+      }
+    }
+
+    if (order.peopleMode.indexOf("拼") > 0) {
+      if (
+        !(
+          order.peopleCount > Config.ModePZpeopleCountMin &&
+          order.peopleCount < Config.ModePZpeopleCountMax
+        )
+      ) {
+        return false;
+      }
+    }
+
+    if (order.peopleMode.indexOf("舒") > 0) {
+      if (
+        !(
+          order.peopleCount > Config.ModeSSpeopleCountMin &&
+          order.peopleCount < Config.ModeSSpeopleCountMax
+        )
+      ) {
         return false;
       }
     }

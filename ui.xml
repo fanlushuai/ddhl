@@ -60,15 +60,27 @@
 
                     <horizontal>
                         <checkbox id="cbPeopleCount" textColor="black" marginLeft='5'checked="false"/>
-                        <text text="【人数】" w="auto" textStyle="bold" textSize="14sp" marginRight='1'/>
-                        <input gravity="center" id="peopleCountMin" inputType="number" text="1" color="#666666" w="65" marginLeft='5'/>
+                        <text text="【独享人数】" w="auto" textStyle="bold" textSize="14sp" marginRight='1'/>
+                        <input gravity="center" id="ModeDXpeopleCountMin" inputType="number" text="1" color="#666666" w="65" marginLeft='5'/>
                         <text text=" - " textStyle="bold" textSize="15sp"/>
-                        <input gravity="center" id="peopleCountMax" inputType="number" text="4" color="#666666" w="65"/>
+                        <input gravity="center" id="ModeDXpeopleCountMax" inputType="number" text="4" color="#666666" w="65"/>
                         <text text="(人)" textStyle="bold" textSize="13sp" marginLeft='1'/>
                     </horizontal>
                     <horizontal>
-                        <text text="独享不限" textStyle="bold" textSize="14sp" marginLeft='10' marginRight='1'/>
-                        <checkbox id="cbOnePeopleModeCountFree" textColor="black" marginLeft='5'checked="false"/>
+                        <checkbox id="cbPeopleCount" textColor="black" marginLeft='5'checked="false"/>
+                        <text text="【拼座人数】" w="auto" textStyle="bold" textSize="14sp" marginRight='1'/>
+                        <input gravity="center" id="ModePZpeopleCountMin" inputType="number" text="1" color="#666666" w="65" marginLeft='5'/>
+                        <text text=" - " textStyle="bold" textSize="15sp"/>
+                        <input gravity="center" id="ModePZpeopleCountMax" inputType="number" text="4" color="#666666" w="65"/>
+                        <text text="(人)" textStyle="bold" textSize="13sp" marginLeft='1'/>
+                    </horizontal>
+                    <horizontal>
+                        <checkbox id="cbPeopleCount" textColor="black" marginLeft='5'checked="false"/>
+                        <text text="【舒适人数】" w="auto" textStyle="bold" textSize="14sp" marginRight='1'/>
+                        <input gravity="center" id="ModeSSpeopleCountMin" inputType="number" text="1" color="#666666" w="65" marginLeft='5'/>
+                        <text text=" - " textStyle="bold" textSize="15sp"/>
+                        <input gravity="center" id="ModeSSpeopleCountMax" inputType="number" text="4" color="#666666" w="65"/>
+                        <text text="(人)" textStyle="bold" textSize="13sp" marginLeft='1'/>
                     </horizontal>
                 </vertical>
 
