@@ -115,23 +115,24 @@ const bootV = {
     dd.backFromPublicWayList();
 
     function sureTop() {
-      log("确保在顶部");
-      while (1) {
-        if (
-          includePageSelector(id("sfc_title_profile_text").text("个人中心"))
-        ) {
-          log("到达顶部");
-          break;
-        }
+      clickSelectIfExists(id("bt_goto_top"), "回到顶部");
 
-        if (!includeSelector(text("顺风车").id("ch_tab_name"))) {
-          log("跳出界面");
-          break;
-        }
+      // log("确保在顶部");
+      // while (1) {
+      //   if (
+      //     includePageSelector(id("sfc_title_profile_text").text("个人中心"))
+      //   ) {
+      //     log("到达顶部");
+      //     break;
+      //   }
 
-        log("向上滚动");
-        AutojsUtil.pageUpBySwipe();
-      }
+      //   if (!includeSelector(text("顺风车").id("ch_tab_name"))) {
+      //     log("跳出界面");
+      //     break;
+      //   }
+
+      //   log("向上滚动");
+      //   AutojsUtil.pageUpBySwipe();
     }
   },
 };
