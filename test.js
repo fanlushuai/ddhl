@@ -1,3 +1,7 @@
+const { LocalStorage } = require("./localStorage");
+
+LocalStorage.clearCache();
+
 //
 // 00:19:20.820/D: cN:..TextView - id: tvDriverPeopleCount - text: 1人
 // 00:19:20.821/D: cN:..TextView - id: tvDriverPooling - text: 拼座     text("舒适拼")
@@ -23,6 +27,10 @@
 // id("tvAcrossPax")text("城际路线")
 
 // text("没有更多数据")
+
+storages.remove("cacheKey", "");
+
+exit();
 
 amountEles = id("tvAmount").find();
 for (let ae of amountEles) {

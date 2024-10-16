@@ -210,6 +210,7 @@ const dd = {
           // todo 之后干嘛？？？
         } else {
           log("测试模式，不点击目标");
+          clickPageSelectorIfExists(id("sfc_invite_drv_title_bar"), "back");
         }
       }
     }

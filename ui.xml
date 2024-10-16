@@ -15,54 +15,102 @@
             </card>
             <card w="*" h="auto" margin="10 5" cardCornerRadius="2dp" cardElevation="1dp" gravity="center_vertical">
                 <vertical padding="18 8" h="auto">
+
+                    <horizontal>
+                        <checkbox id="cbByWayLevel" textColor="black" marginLeft='5'checked="false"/>
+                        <text text='【顺路程度】' w="auto" textStyle="bold" textSize="14sp" marginRight='1'/>
+                        <input gravity="center" id="byWayLevel" inputType="number" text="90" color="#666666" w="65"/>
+                        <text text="%" textStyle="bold" textSize="13sp" marginLeft='1'/>
+                    </horizontal>
+
+                    <horizontal>
+                        <checkbox id="cbOrderDisFrom" textColor="black" marginLeft='5'checked="false"/>
+                        <text text="【距离起点】" w="auto" textStyle="bold" textSize="14sp" marginRight='1'/>
+                        <text text="最大" textStyle="bold" textSize="15sp"/>
+                        <input gravity="center" id="orderDisFromMax" inputType="number" text="10" color="#666666" w="65" marginLeft='5'/>
+                        <text text="(KM) " textStyle="bold" textSize="15sp"/>
+                    </horizontal>
+                    <text marginLeft='5' text="平台没有终点距离的信息，则不生效" textSize="11sp" textColor="red" w="auto" textStyle="bold" layout_weight="0.2" />
+
+                    <horizontal>
+                        <checkbox id="cbOrderDisTo" textColor="black" marginLeft='5'checked="false"/>
+                        <text text="【距离终点】" w="auto" textStyle="bold" textSize="14sp" marginRight='1'/>
+                        <text text="最大" textStyle="bold" textSize="15sp"/>
+                        <input gravity="center" id="orderDisToMax" inputType="number" text="10" color="#666666" w="65"/>
+                        <text text="(KM)" textStyle="bold" textSize="13sp" marginLeft='1'/>
+                    </horizontal>
+                </vertical>
+                <View bg="#4EBFDD" h="*" w="5" />
+            </card>
+
+
+
+            <card w="*" h="auto" margin="10 5" cardCornerRadius="2dp" cardElevation="1dp" gravity="center_vertical">
+                <vertical padding="18 8" h="auto">
+                    <horizontal>
+                        <text text="独享" textStyle="bold" textSize="14sp" marginLeft='10' marginRight='1'/>
+                        <checkbox id="cbOrderModeOnePeople" textColor="black" marginLeft='5'checked="true"/>
+                        <text text="拼单" textStyle="bold" textSize="14sp" marginLeft='10' marginRight='1'/>
+                        <checkbox id="cbOrderModeMultiPeople" textColor="black" marginLeft='5'checked="true"/>
+                        <text text="舒适" textStyle="bold" textSize="14sp" marginLeft='10' marginRight='1'/>
+                        <checkbox id="cbOrderModeComfort" textColor="black" marginLeft='5'checked="true"/>
+                        <text text="特惠" textStyle="bold" textSize="14sp" marginLeft='10' marginRight='1'/>
+                        <checkbox id="cbOrderModeChip" textColor="black" marginLeft='5'checked="true"/>
+                    </horizontal>
+
+                    <horizontal>
+                        <checkbox id="cbMultiPeople" textColor="black" marginLeft='5'checked="false"/>
+                        <text text="【人数】" w="auto" textStyle="bold" textSize="14sp" marginRight='1'/>
+                        <input gravity="center" id="multiPeolpeMinCount" inputType="number" text="1" color="#666666" w="65" marginLeft='5'/>
+                        <text text=" - " textStyle="bold" textSize="15sp"/>
+                        <input gravity="center" id="multiPeolpeMaxCount" inputType="number" text="4" color="#666666" w="65"/>
+                        <text text="(人)" textStyle="bold" textSize="13sp" marginLeft='1'/>
+                    </horizontal>
+                    <horizontal>
+                        <text text="独享不限" textStyle="bold" textSize="14sp" marginLeft='10' marginRight='1'/>
+                        <checkbox id="cbOnePeopleModeCountFree" textColor="black" marginLeft='5'checked="false"/>
+                    </horizontal>
+                </vertical>
+
+                <View bg="#4EBFDD" h="*" w="5" />
+            </card>
+
+            <card w="*" h="auto" margin="10 5" cardCornerRadius="2dp" cardElevation="1dp" gravity="center_vertical">
+                <vertical padding="18 8" h="auto">
                     <horizontal>
                         <checkbox id="cbGoTime" textColor="black" marginLeft='5'checked="false"/>
                         <text text="【出发时间】" w="auto" textStyle="bold" textSize="14sp" marginRight='1'/>
-                        <input gravity="center" id="goTimeBegin" inputType="number" text="25" color="#666666" w="65" marginLeft='5'/>
+                        <input gravity="center" id="goTimeBegin" inputType="datetime" color="#666666" w="65" marginLeft='5'/>
                         <text text=" - " textStyle="bold" textSize="15sp"/>
-                        <input gravity="center" id="goTimeEnd" inputType="number" text="60" color="#666666" w="65"/>
+                        <input gravity="center" id="goTimeEnd" inputType="datetime" color="#666666" w="65"/>
                         <text text="(点)" textStyle="bold" textSize="13sp" marginLeft='1'/>
-                    </horizontal>
-                    <horizontal>
-                        <checkbox id="cbOnePeople" textColor="black" marginLeft='5'checked="false"/>
-                        <text text="【独享人数】" w="auto" textStyle="bold" textSize="14sp" marginRight='1'/>
-                        <input gravity="center" id="onePeolpeMinCount" inputType="number" text="25" color="#666666" w="65" marginLeft='5'/>
-                        <text text=" - " textStyle="bold" textSize="15sp"/>
-                        <input gravity="center" id="onePeolpeMaxCount" inputType="number" text="60" color="#666666" w="65"/>
-                        <text text="(位)" textStyle="bold" textSize="13sp" marginLeft='1'/>
-                    </horizontal>
-                    <horizontal>
-                        <checkbox id="cbMultiPeople" textColor="black" marginLeft='5'checked="false"/>
-                        <text text="【拼座人数】" w="auto" textStyle="bold" textSize="14sp" marginRight='1'/>
-                        <input gravity="center" id="multiPeolpeMinCount" inputType="number" text="25" color="#666666" w="65" marginLeft='5'/>
-                        <text text=" - " textStyle="bold" textSize="15sp"/>
-                        <input gravity="center" id="multiPeolpeMaxCount" inputType="number" text="60" color="#666666" w="65"/>
-                        <text text="(位)" textStyle="bold" textSize="13sp" marginLeft='1'/>
-                    </horizontal>
-                    <horizontal>
-                        <checkbox id="cbComfortPeople" textColor="black" marginLeft='5'checked="false"/>
-                        <text text="【舒适人数】" w="auto" textStyle="bold" textSize="14sp" marginRight='1'/>
-                        <input gravity="center" id="comfortPeopleMinCount" inputType="number" text="25" color="#666666" w="65" marginLeft='5'/>
-                        <text text=" - " textStyle="bold" textSize="15sp"/>
-                        <input gravity="center" id="comfortPeopleMaxCount" inputType="number" text="60" color="#666666" w="65"/>
-                        <text text="(位)" textStyle="bold" textSize="13sp" marginLeft='1'/>
                     </horizontal>
                     <horizontal>
                         <checkbox id="cbOrderPrice" textColor="black" marginLeft='5'checked="false"/>
                         <text text="【订单金额】" w="auto" textStyle="bold" textSize="14sp" marginRight='1'/>
-                        <input gravity="center" id="orderPriceMin" inputType="number" text="25" color="#666666" w="65" marginLeft='5'/>
+                        <input gravity="center" id="orderPriceMin" inputType="number" text="0" color="#666666" w="65" marginLeft='5'/>
                         <text text=" - " textStyle="bold" textSize="15sp"/>
-                        <input gravity="center" id="orderPriceMax" inputType="number" text="60" color="#666666" w="65"/>
+                        <input gravity="center" id="orderPriceMax" inputType="number" text="1000" color="#666666" w="65"/>
                         <text text="(元)" textStyle="bold" textSize="13sp" marginLeft='1'/>
                     </horizontal>
-                    <horizontal>
-                        <checkbox id="cbOrderDis" textColor="black" marginLeft='5'checked="false"/>
-                        <text text="【起点距离】" w="auto" textStyle="bold" textSize="14sp" marginRight='1'/>
-                        <input gravity="center" id="orderDisMin" inputType="number" text="25" color="#666666" w="65" marginLeft='5'/>
-                        <text text=" - " textStyle="bold" textSize="15sp"/>
-                        <input gravity="center" id="orderDisMax" inputType="number" text="60" color="#666666" w="65"/>
-                        <text text="(KM)" textStyle="bold" textSize="13sp" marginLeft='1'/>
-                    </horizontal>
+                </vertical>
+
+                <View bg="#4EBFDD" h="*" w="5" />
+            </card>
+
+            <card w="*" h="auto" margin="10 5" cardCornerRadius="2dp" cardElevation="1dp" gravity="center_vertical">
+                <vertical padding="18 8" h="auto">
+                    <text marginLeft='5' text="关键字：前面带标志。+ 表示 包含， - 表示 排除" textSize="11sp" textColor="red" w="auto" textStyle="bold" layout_weight="0.2" />
+                    <linear>
+                        <checkbox id="cbFromKeyWords" textColor="black" marginLeft='5'checked="false"/>
+                        <text text="起" textSize="14sp" textColor="black" w="auto" textStyle="bold" />
+                        <input id="fromKeyWords" hint='+北京-清华大学' textSize="12sp" color="black" paddingLeft="5" ems="3" inputType="text" w="*"/>
+                    </linear>
+                    <linear>
+                        <checkbox id="cbEndKeyWords" textColor="black" marginLeft='5'checked="false"/>
+                        <text text="终" textSize="14sp" textColor="black" w="auto" textStyle="bold" />
+                        <input id="endKeyWords" hint='+香港-家里蹲大学' textSize="12sp" color="black" paddingLeft="5" ems="3" inputType="text" w="*" />
+                    </linear>
                 </vertical>
                 <View bg="#4EBFDD" h="*" w="5" />
             </card>
@@ -70,37 +118,13 @@
             <card w="*" h="auto" margin="10 5" cardCornerRadius="2dp" cardElevation="1dp" gravity="center_vertical">
                 <vertical padding="18 8" h="auto">
                     <horizontal>
-                        <text text='【顺路程度】' w="auto" textStyle="bold" textSize="14sp" marginRight='1'/>
-                        <input gravity="center" id="byWayLevel" inputType="number" text="80" color="#666666" w="65"/>
-                        <text text="%" textStyle="bold" textSize="13sp" marginLeft='1'/>
+                        <text text="提醒铃声" textStyle="bold" textSize="14sp" marginLeft='10' marginRight='1'/>
+                        <checkbox id="alertMusic" textColor="black" marginLeft='5'checked="false"/>
+                        <text text="测试模式" textStyle="bold" textSize="14sp" marginLeft='20' marginRight='1'/>
+                        <checkbox id="testMode" textColor="black" marginLeft='5'checked="false"/>
                     </horizontal>
                     <horizontal>
-                        <text text="【乘客人数】" w="auto" textStyle="bold" textSize="14sp" marginRight='1'/>
-                        <input gravity="center" id="peopleCountMin" inputType="number" text="25" color="#666666" w="65" marginLeft='5'/>
-                        <text text=" - " textStyle="bold" textSize="15sp"/>
-                        <input gravity="center" id="peopleCountMax" inputType="number" text="60" color="#666666" w="65"/>
-                        <text text="(位)" textStyle="bold" textSize="13sp" marginLeft='1'/>
-                    </horizontal>
-                    <horizontal>
-                        <text text="【独享不限】" textStyle="bold" textSize="14sp" marginRight='1'/>
-                        <checkbox id="cbOnePeopleNotLimit" textColor="black" marginLeft='5'checked="false"/>
-                    </horizontal>
-                    <horizontal>
-                        <text text="【价格】" w="auto" textStyle="bold" textSize="14sp" marginRight='1'/>
-                        <input gravity="center" id="orderPriceMin1" inputType="number" text="25" color="#666666" w="65" marginLeft='5'/>
-                        <text text=" - " textStyle="bold" textSize="15sp"/>
-                        <input gravity="center" id="orderPriceMax1" inputType="number" text="60" color="#666666" w="65"/>
-                        <text text="(元)" textStyle="bold" textSize="13sp" marginLeft='1'/>
-                    </horizontal>
-                    <horizontal>
-                        <text text="【距离】" w="auto" textStyle="bold" textSize="14sp" marginRight='1'/>
-                        <input gravity="center" id="orderDisMin1" inputType="number" text="25" color="#666666" w="65" marginLeft='5'/>
-                        <text text=" - " textStyle="bold" textSize="15sp"/>
-                        <input gravity="center" id="orderDisMax1" inputType="number" text="60" color="#666666" w="65"/>
-                        <text text="(KM)" textStyle="bold" textSize="13sp" marginLeft='1'/>
-                    </horizontal>
-                    <horizontal>
-                        <text text='【刷新间隔】' w="auto" textStyle="bold" textSize="14sp" marginRight='1'/>
+                        <text text='刷新间隔' w="auto" textStyle="bold" textSize="14sp" marginLeft='10' marginRight='1'/>
                         <input gravity="center" id="refreshIntervalSec" inputType="number" text="15" color="#666666" w="65"/>
                         <text text="(秒)" textStyle="bold" textSize="13sp" marginLeft='1'/>
                     </horizontal>
@@ -110,27 +134,19 @@
 
             <card w="*" h="auto" margin="10 5" cardCornerRadius="2dp" cardElevation="1dp" gravity="center_vertical">
                 <vertical padding="18 8" h="auto">
-                    <text text="关键字：前面带+、-符号表示，包含和排除" textSize="11sp" textColor="red" w="auto" textStyle="bold" layout_weight="0.2" />
-                    <linear>
-                        <text text="起点" textSize="14sp" textColor="black" w="auto" textStyle="bold" />
-                        <input id="fromKeyWords" hnit='+北京-佛山' textSize="14sp" color="black" paddingLeft="5" ems="3" inputType="text" w="*"/>
-                    </linear>
-                    <linear>
-                        <text text="终点" textSize="14sp" textColor="black" w="auto" textStyle="bold" />
-                        <input id="endKeyWords" text='10' textSize="14sp" color="black" paddingLeft="5" ems="3" inputType="text" w="*" />
-                    </linear>
-                </vertical>
-                <View bg="#4EBFDD" h="*" w="5" />
-            </card>
-
-            <card w="*" h="auto" margin="10 5" cardCornerRadius="2dp" cardElevation="1dp" gravity="center_vertical">
-                <vertical padding="18 8" h="auto">
                     <horizontal>
-                        <text text="提醒铃声" textStyle="bold" textSize="14sp" marginRight='1'/>
-                        <checkbox id="alertMusic" textColor="black" marginLeft='5'checked="false"/>
-                        <text text="测试模式" textStyle="bold" textSize="14sp" marginLeft='20' marginRight='1'/>
-                        <checkbox id="testMode" textColor="black" marginLeft='5'checked="false"/>
+                        <text text="滴滴行程" textStyle="bold" textSize="14sp" marginLeft='10' marginRight='1'/>
+                        <checkbox id="ddxc" textColor="black" marginLeft='5'checked="false"/>
+                        <text text="滴滴常用地址" textStyle="bold" textSize="14sp" marginLeft='20' marginRight='1'/>
+                        <checkbox id="ddOffenWay" textColor="black" marginLeft='5'checked="false"/>
                     </horizontal>
+                    <horizontal>
+                        <text text="哈啰行程" textStyle="bold" textSize="14sp" marginLeft='10' marginRight='1'/>
+                        <checkbox id="hlxc" textColor="black" marginLeft='5'checked="false"/>
+                        <text text="哈啰大厅" textStyle="bold" textSize="14sp" marginLeft='20' marginRight='1'/>
+                        <checkbox id="hldt" textColor="black" marginLeft='5'checked="false"/>
+                    </horizontal>
+
                 </vertical>
                 <View bg="#4EBFDD" h="*" w="5" />
             </card>

@@ -1,4 +1,9 @@
 const LocalStorage = {
+  clearCache: function () {
+    log("清除缓存");
+    let storage = storages.create("autojsAppCacheKey");
+    storage.put("cacheKey", "");
+  },
   localStorage: function () {
     // 保证，一个手机上安装不同的autojs应用，相互之间的cachekey不受到影响
     let storage = storages.create("autojsAppCacheKey");
