@@ -59,7 +59,7 @@
                     </horizontal>
 
                     <horizontal>
-                        <checkbox id="cbPeopleCount" textColor="black" marginLeft='5'checked="false"/>
+                        <checkbox id="cbDXPeopleCount" textColor="black" marginLeft='5'checked="false"/>
                         <text text="【独享人数】" w="auto" textStyle="bold" textSize="14sp" marginRight='1'/>
                         <input gravity="center" id="ModeDXpeopleCountMin" inputType="number" text="1" color="#666666" w="65" marginLeft='5'/>
                         <text text=" - " textStyle="bold" textSize="15sp"/>
@@ -67,7 +67,7 @@
                         <text text="(人)" textStyle="bold" textSize="13sp" marginLeft='1'/>
                     </horizontal>
                     <horizontal>
-                        <checkbox id="cbPeopleCount" textColor="black" marginLeft='5'checked="false"/>
+                        <checkbox id="cbPZPeopleCount" textColor="black" marginLeft='5'checked="false"/>
                         <text text="【拼座人数】" w="auto" textStyle="bold" textSize="14sp" marginRight='1'/>
                         <input gravity="center" id="ModePZpeopleCountMin" inputType="number" text="1" color="#666666" w="65" marginLeft='5'/>
                         <text text=" - " textStyle="bold" textSize="15sp"/>
@@ -75,7 +75,7 @@
                         <text text="(人)" textStyle="bold" textSize="13sp" marginLeft='1'/>
                     </horizontal>
                     <horizontal>
-                        <checkbox id="cbPeopleCount" textColor="black" marginLeft='5'checked="false"/>
+                        <checkbox id="cbSSPeopleCount" textColor="black" marginLeft='5'checked="false"/>
                         <text text="【舒适人数】" w="auto" textStyle="bold" textSize="14sp" marginRight='1'/>
                         <input gravity="center" id="ModeSSpeopleCountMin" inputType="number" text="1" color="#666666" w="65" marginLeft='5'/>
                         <text text=" - " textStyle="bold" textSize="15sp"/>

@@ -141,7 +141,7 @@ const matchOrder = {
       return false;
     }
 
-    if (order.peopleMode.indexOf("独") > 0) {
+    if (Config.cbDXPeopleCount && order.peopleMode.indexOf("独") > 0) {
       if (
         !(
           order.peopleCount > Config.ModeDXpeopleCountMin &&
@@ -152,7 +152,7 @@ const matchOrder = {
       }
     }
 
-    if (order.peopleMode.indexOf("拼") > 0) {
+    if (Config.cbPZPeopleCount && order.peopleMode.indexOf("拼") > 0) {
       if (
         !(
           order.peopleCount > Config.ModePZpeopleCountMin &&
@@ -163,7 +163,7 @@ const matchOrder = {
       }
     }
 
-    if (order.peopleMode.indexOf("舒") > 0) {
+    if (Config.cbSSPeopleCount && order.peopleMode.indexOf("舒") > 0) {
       if (
         !(
           order.peopleCount > Config.ModeSSpeopleCountMin &&
