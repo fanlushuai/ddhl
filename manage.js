@@ -10,12 +10,17 @@ const { clickTextIfExists } = require("./x");
 
 // dd.publicWayList(); //行程界面
 
-const boot = {
+const bootV = {
   // 跳转到位置，然后开始执行。
   //包含hl，大厅，行程，
   //包含dd，常用路线，行程界面，
 
+  intoHldtView: function () {
+    hl.showAllList();
+    hl.watchOrder();
+  },
   boot2hl: function () {
+    log("启动哈啰");
     app.launchApp("哈啰");
 
     let disableStartTime;
@@ -119,4 +124,4 @@ const boot = {
   },
 };
 
-module.exports = { boot };
+module.exports = { bootV };

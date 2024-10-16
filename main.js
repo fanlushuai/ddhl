@@ -33,7 +33,7 @@ ui.boot.click(function () {
   threads.start(function () {
     home();
     sleep(1000);
-    engines.execScriptFile("./qq.js");
+    engines.execScriptFile("./work.js");
     threads.shutDownAll();
   });
 });
