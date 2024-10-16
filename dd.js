@@ -3,7 +3,6 @@ const { matchOrder } = require("./matchOrder");
 const {
   clickEleWithLog,
   clickPageSelectorIfExists,
-  include,
   findInPage,
   clickSelectIfExists,
   clickParentClickableSelectorIfExists,
@@ -146,6 +145,7 @@ const dd = {
 
     let orders = [];
     for (let pe of priceEles) {
+      // 此处返回的，就是标准order对象
       let order = {};
       order.ele = pe;
       order.price = parseOrder.price(pe.text());

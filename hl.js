@@ -4,9 +4,6 @@ const {
   clickTextIfExists,
   clickSelectIfExists,
   include,
-  clickEleWithLog,
-  findClickableParent,
-  clickParentClickableSelectorIfExists,
   clickEleParentClickableIfExists,
 } = require("./x");
 
