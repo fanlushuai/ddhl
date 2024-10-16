@@ -10,27 +10,32 @@ boot();
 function boot() {
   log(Config);
   slog("脚本启动");
-  if (Config.ddxc) {
-    log("开启滴滴行程");
-    bootV.boot2dd();
-    bootV.intoDdxcView();
-  }
 
-  if (Config.ddOffenWay) {
-    log("开启滴滴 常用路线");
+  if (Config.ddOffenWay || Config.ddxc) {
+    slog("切换到滴滴");
     bootV.boot2dd();
-    bootV.intoDdxcView();
+
+    if (Config.ddxc) {
+      slog("开启滴滴行程");
+      bootV.intoDdxcView();
+    }
+
+    if (Config.ddOffenWay) {
+      slog("开启滴滴 常用路线");
+      bootV.intoDdxcView();
+    }
   }
 
   if (Config.hlxc || Config.hldt) {
+    slog("切换到哈啰");
     bootV.boot2hl();
 
     if (Config.hlxc) {
-      log("开启哈啰 行程");
+      slog("开启哈啰 行程");
     }
 
     if (Config.hldt) {
-      log("开启哈啰 大厅");
+      slog("开启哈啰 大厅");
       bootV.intoHldtView();
     }
   }
