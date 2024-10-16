@@ -23,7 +23,7 @@ function boot() {
 
     if (Config.ddOffenWay) {
       slog("开启滴滴 常用路线");
-      bootV.intoDdxcView();
+      bootV.intoDdOfferView();
     }
   }
 
