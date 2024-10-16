@@ -1,5 +1,10 @@
 const { matchOrder } = require("./matchOrder");
-const { clickTextIfExists, clickSelectIfExists, include } = require("./x");
+const {
+  clickTextIfExists,
+  clickSelectIfExists,
+  include,
+  clickEleWithLog,
+} = require("./x");
 
 function findIdText(baseEle, idStr) {
   let e = baseEle.findOne(id(idStr));
