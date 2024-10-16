@@ -5,6 +5,9 @@ const {
   clickPageSelectorIfExists,
   include,
   includeSelector,
+  findInPage,
+  clickSelectIfExists,
+  clickParentClickableSelectorIfExists,
 } = require("./x");
 function findIdInParent(ele, deep, idStr) {
   let e = ele.parent();
@@ -118,6 +121,8 @@ const dd = {
         clickPageSelectorIfExists(id("back_icon"), "返回");
         sleep(1000);
       }
+    } else {
+      log("没有行程");
     }
   },
   publicWayOrderList: function () {
@@ -217,6 +222,11 @@ const dd = {
         break;
       }
 
+      if (includeSelector(textStartsWith("暂无顺路乘客，持续寻找中"))) {
+        log("列表无内容");
+        break;
+      }
+
       // todo 匹配了就进行点击
       clickIfMatchOrder(this.page());
 
@@ -226,12 +236,14 @@ const dd = {
   },
   awaysWayTabs: function () {
     let eles = scrollable().find();
+    log("将常用路线滚动到顶部");
     eles[1].scrollForward();
 
     if (
-      clickSelectIfExists(
+      clickParentClickableSelectorIfExists(
         id("sfc_tab_item_text").text("常用路线订单"),
-        "常用路线订单"
+        "常用路线订单",
+        2
       )
     ) {
     } else {

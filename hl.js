@@ -11,6 +11,59 @@ function findIdText(baseEle, idStr) {
 }
 
 const hl = {
+  xc: function () {
+    //todo
+    return;
+  },
+  xc_scroll: function () {},
+  xc_page: function () {
+    let amountEles = id("tvAmount").find();
+    let orders = [];
+    for (let amountEle of amountEles) {
+      let cardEle = amountEle.parent().parent().parent();
+      //   { tvHitchPercent: 55%顺路,
+      //     tvDate: '今天 07:00~07:10',
+      //     tvStartAddress: '距你111.4km',
+      //     tvStartRegionDescribe: '乐天宠物诊疗',
+      //     tvEndAddress: '管城回族区 · 经济开发区明湖街道',
+      //     tvEndRegionDescribe: '盛华里购物中心',
+      //     tvEndDistance: '11km',
+      //     tvDriverPeopleCount: '1人',
+      //     tvDriverPooling: 独享   拼座,
+      //     tvTabPay: '已预付',
+      //     tvDriverHighwayFee: '不承担高速费' }
+      let order = {
+        ele: cardEle,
+        tvAmount: amountEle.getText(), //金额
+        tvHitchPercent: findIdText(cardEle, "tvHitchPercent"), //顺路度
+        tvDate: findIdText(cardEle, "tvDate"), //出发时间
+        tvStartAddress: findIdText(cardEle, "tvStartAddress"), //距离,出发
+        tvStartRegionDescribe: findIdText(cardEle, "tvStartRegionDescribe"), //出发地址
+        tvEndAddress: findIdText(cardEle, "tvEndAddress"), //到达地址,大
+        tvEndRegionDescribe: findIdText(cardEle, "tvEndRegionDescribe"), //到达地址,小
+        tvEndDistance: findIdText(cardEle, "tvEndDistance"), //距离,到达
+        tvDriverPeopleCount: findIdText(cardEle, "tvDriverPeopleCount"), //人数
+        tvDriverPooling: findIdText(cardEle, "tvDriverPooling"), //拼车,独享
+        tvTabPay: findIdText(cardEle, "tvTabPay"), //已预付
+        tvDriverHighwayFee: findIdText(cardEle, "tvDriverHighwayFee"), //高速
+      };
+      log(order);
+      order = parseHLOrder_xc(order);
+      log(order);
+      order.ele == cardEle;
+      orders.push(order);
+    }
+
+    function findIdText(baseEle, idStr) {
+      let e = baseEle.findOne(id(idStr));
+      if (e != null) {
+        let text = e.text();
+        log(text);
+        return text;
+      }
+    }
+  },
+
   tabWayInCity: function () {
     return clickTextIfExists("市内路线");
   },

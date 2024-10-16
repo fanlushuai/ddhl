@@ -164,4 +164,136 @@ const matchOrder = {
   },
 };
 
-module.exports = { matchOrder };
+// function parseDDOrder(ddOrder){
+//   let order={
+
+//     byWayLevel:,
+//     time:,
+//     price:,
+//     disFrom:,
+//     disTo:,
+//     dis:,
+//     fromAddr:,
+//     toAddr:,
+//     peopleCount:,
+//     peopleMode:,
+//     highwayFee:,
+//   }
+// }
+
+function parseHLOrder_xc(hlOrder) {
+  let o = hlOrder;
+
+  let p = {
+    byWayLevel: function (str) {
+      if (str) {
+        return str.replace("%顺路", "");
+      }
+    },
+
+    time: function (str) {
+      if (str) {
+        // todo 解析时间
+      }
+    },
+    price: function (str) {
+      if (str) {
+        return str.replace("元", "");
+      }
+    },
+    disFrom: function (str) {
+      if (str) {
+        return str.replace("距你", "").replace("km", "");
+      }
+    },
+    disTo: function (str) {
+      if (str) {
+        return str.replace("km", "");
+      }
+    },
+    dis: function (str) {
+      if (str) {
+        return str;
+      }
+    },
+    fromAddr: function (str) {
+      if (str) {
+        return str;
+      }
+    },
+    toAddr: function (str) {
+      if (str) {
+        return str;
+      }
+    },
+    peopleCount: function (str) {
+      if (str) {
+        return str.replace("人", "");
+      }
+    },
+    peopleMode: function (str) {
+      if (str) {
+        if (str.indexOf("拼") != -1) {
+          return "拼座";
+        } else if (str.indexOf("独") != -1) {
+          return "独享";
+        }
+
+        return "";
+      }
+    },
+    highwayFee: function (str) {
+      if (str) {
+        if (str.indexOf("协商") != -1) {
+          return "协商";
+        } else if (str.indexOf("不承担") != -1) {
+          return "不承担";
+        } else {
+          return "";
+        }
+      }
+    },
+  };
+
+  //   { tvHitchPercent: 55%顺路,
+  //     tvDate: '今天 07:00~07:10',
+  //     tvStartAddress: '距你111.4km',
+  //     tvStartRegionDescribe: '乐天宠物诊疗',
+  //     tvEndAddress: '管城回族区 · 经济开发区明湖街道',
+  //     tvEndRegionDescribe: '盛华里购物中心',
+  //     tvEndDistance: '11km',
+  //     tvDriverPeopleCount: '1人',
+  //     tvDriverPooling: 独享   拼座,
+  //     tvTabPay: '已预付',
+  // id("tvAmount")
+  let order = {
+    byWayLevel: p.byWayLevel(o.tvHitchPercent),
+    time: p.time(o.tvDate),
+    price: p.price(o.tvAmount),
+    disFrom: p.disFrom(o.tvStartAddress),
+    disTo: p.disTo(o.tvEndDistance),
+    // dis:p.dis(o.),  //没有全程距离
+    fromAddr: p.fromAddr(o.tvStartRegionDescribe),
+    toAddr: p.toAddr(o.tvEndAddress + " " + o.tvEndRegionDescribe),
+    peopleCount: p.peopleCount(o.tvDriverPeopleCount),
+    peopleMode: p.peopleMode(o.tvDriverPooling),
+    highwayFee: p.highwayFee(o.tvDriverHighwayFee),
+  };
+
+  return order;
+}
+
+// 标准order定义：
+// byWayLevel
+// time
+// price
+// disFrom
+// disTo
+// dis
+// fromAddr
+// toAddr
+// peopleCount
+// peopleMode
+// highwayFee
+
+module.exports = { matchOrder, parseHLOrder_xc };
