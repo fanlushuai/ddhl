@@ -1,4 +1,4 @@
-const { dd } = require("./dd");
+const { dd } = require("../dd");
 const {
   clickSelectIfExists,
   clickPageSelectorIfExists,
@@ -7,7 +7,7 @@ const {
   includeSelector,
   H,
   W,
-} = require("./x");
+} = require("../x");
 
 // let eles = scrollable().find();
 // eles[1].scrollForward();

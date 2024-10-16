@@ -1,4 +1,5 @@
 const { AutojsUtil } = require("./autojsUtil");
+const { Config } = require("./config");
 const { matchOrder } = require("./matchOrder");
 const {
   clickTextIfExists,
@@ -170,8 +171,8 @@ const hl = {
 
   sheet: function () {
     // todo 测试模式
-    log("测试模式");
     if (Config.testMode) {
+      log("测试模式,什么都不做");
     } else {
       textMatches(/(立即抢单)|(确认同行)/).waitFor();
       log("进入抢单页面");
@@ -195,7 +196,9 @@ const hl = {
           //todo  等待进入页面
           log("进入");
           // todo 进去抢单。确认订单。
-          AutojsUtil.playMp3(Config.mp3Path);
+          if (Config.alertMusic) {
+            AutojsUtil.playMp3(Config.mp3Path);
+          }
         }
       }
     });

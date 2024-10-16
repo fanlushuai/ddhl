@@ -1,4 +1,4 @@
-const { matchOrder, parseHLOrder_xc } = require("./matchOrder");
+const { matchOrder, parseHLOrder_xc } = require("../matchOrder");
 
 // id("tvHitchPercent");
 // id("tvDate");

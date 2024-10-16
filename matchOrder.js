@@ -37,7 +37,6 @@ function keysWordsOk(keys, testStr) {
   return true;
 }
 
-// testMode: false
 const matchOrder = {
   fromKeysOk: function (fromAddr) {
     return keysWordsOk(Config.fromKeyWords, fromAddr);

@@ -119,9 +119,9 @@
                 <vertical padding="18 8" h="auto">
                     <horizontal>
                         <text text="提醒铃声" textStyle="bold" textSize="14sp" marginLeft='10' marginRight='1'/>
-                        <checkbox id="alertMusic" textColor="black" marginLeft='5'checked="false"/>
+                        <checkbox id="alertMusic" textColor="black" marginLeft='5'checked="true"/>
                         <text text="测试模式" textStyle="bold" textSize="14sp" marginLeft='20' marginRight='1'/>
-                        <checkbox id="testMode" textColor="black" marginLeft='5'checked="false"/>
+                        <checkbox id="testMode" textColor="black" marginLeft='5'checked="true"/>
                     </horizontal>
                     <horizontal>
                         <text text='刷新间隔' w="auto" textStyle="bold" textSize="14sp" marginLeft='10' marginRight='1'/>

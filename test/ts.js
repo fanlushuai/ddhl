@@ -11,21 +11,23 @@ function keysWordsOk(keys, testStr) {
     }
   }
 
-  log(postionArr);
+  //   log(postionArr);
 
   for (let i = 0; i < postionArr.length; i++) {
     let keywords = keys.substring(postionArr[i], postionArr[i + 1]).trim();
-    log("关键字:" + keywords);
+    // log("关键字:" + keywords);
     if (keywords.startsWith("+")) {
       keywords = keywords.substring(1);
-      log("包含 关键字:" + keywords);
+      //   log("包含 关键字:" + keywords);
       if (testStr.indexOf(keywords) == -1) {
+        log("关键字不匹配，未找到需要包含的关键字:" + keywords + "");
         return false;
       }
     } else if (keywords.startsWith("-")) {
       keywords = keywords.substring(1);
-      log("排除 关键字:" + keywords);
+      //   log("排除 关键字:" + keywords);
       if (testStr.indexOf(keywords) != -1) {
+        log("关键字不匹配 ，包含了不需要的关键字:" + keywords + "");
         return false;
       }
     }

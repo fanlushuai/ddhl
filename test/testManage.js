@@ -1,5 +1,5 @@
-const { AutojsUtil } = require("./autojsUtil");
-const { boot } = require("./manage");
+const { AutojsUtil } = require("../autojsUtil");
+const { boot } = require("../manage");
 const {
   clickSelectIfExists,
   includeSelector,
@@ -10,7 +10,7 @@ const {
   getSelectorBounds,
   findOnceInPage,
   includePageSelector,
-} = require("./x");
+} = require("../x");
 
 function isInOffenWay() {
   let sb = getSelectorBounds(text("顺风车").id("ch_tab_name"));
