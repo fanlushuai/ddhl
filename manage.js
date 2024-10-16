@@ -1,6 +1,16 @@
 const { dd } = require("./dd");
 const { hl } = require("./hl");
-const { clickTextIfExists } = require("./x");
+const {
+  clickSelectIfExists,
+  includeSelector,
+  W,
+  H,
+  getCurrentTime,
+  disableNotPassTimeSec,
+
+  includePageSelector,
+} = require("./x");
+const { AutojsUtil } = require("./autojsUtil");
 
 // hl.watchOrder(); //大厅订单
 

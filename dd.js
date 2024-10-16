@@ -4,10 +4,10 @@ const {
   clickEleWithLog,
   clickPageSelectorIfExists,
   include,
-  includeSelector,
   findInPage,
   clickSelectIfExists,
   clickParentClickableSelectorIfExists,
+  includeSelector,
 } = require("./x");
 function findIdInParent(ele, deep, idStr) {
   let e = ele.parent();

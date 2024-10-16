@@ -5,30 +5,31 @@ const { slog, setBootFunc } = require("./script");
 // 初始化配置到内存里面
 Config.loadConfig();
 setBootFunc(boot);
+boot();
 
 function boot() {
   log(Config);
   slog("脚本启动");
-  if (ddxc) {
+  if (Config.ddxc) {
     log("开启滴滴行程");
     bootV.boot2dd();
     bootV.intoDdxcView();
   }
 
-  if (ddOffenWay) {
+  if (Config.ddOffenWay) {
     log("开启滴滴 常用路线");
     bootV.boot2dd();
     bootV.intoDdxcView();
   }
 
-  if (hlxc || hldt) {
+  if (Config.hlxc || Config.hldt) {
     bootV.boot2hl();
 
-    if (hlxc) {
+    if (Config.hlxc) {
       log("开启哈啰 行程");
     }
 
-    if (hldt) {
+    if (Config.hldt) {
       log("开启哈啰 大厅");
       bootV.intoHldtView();
     }
